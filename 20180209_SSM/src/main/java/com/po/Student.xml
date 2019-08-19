@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.StudentMapper" >
+
+
+        <insert id="add"  parameterType="Student" >
+                insert into Student(name,age,birthday,hobbies,sex,photopath) values(#{name},#{age},#{birthday},#{hobbies},#{sex},#{photopath})
+        </insert>
+
+        <delete id="del"  parameterType="int"  >
+                delete  from student where id=#{id}
+        </delete>
+
+        <update id="update" parameterType="Student" >
+                update student
+                        set
+                        name=#{name},
+                        age=#{age},
+                        birthday=#{birthday},
+                        hobbies=#{hobbies},
+                        sex=#{sex},
+                        photopath=#{photopath}
+                        where
+                                id=#{id}
+        </update>
+        <select  id="getList" parameterType="map" resultType="Student">
+                select * from student
+                <where>
+                  <if test="name!=null">
+                     and name like '%${name}%'
+                  </if>
+                </where>
+                limit #{startRecord},#{pageSize}
+        </select>
+        <select  id="getList1"  resultType="Student">
+                select * from student
+        </select>
+
+        <select  id="getById" parameterType="int"  resultType="Student">
+                select * from student where id=#{id}
+        </select>
+
+        <select  id="getCount" parameterType="string"  resultType="int"  >
+                select count(*) from student where   name like '%${value}%'
+        </select>
+        
+        <select id="getDroup" resultType="Student">
+             select * from student group by name
+        </select>
+        
+        <select id="getListByName" parameterType="string"  resultType="Student">
+            select * from student where name=#{name}
+        </select>
+
+</mapper>
